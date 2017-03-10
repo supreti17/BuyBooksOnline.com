@@ -1,0 +1,9 @@
+.form-inline {
+	text-align: left;
+}
+
+.form-horizontal .form-group {
+	width: 80%;
+	margin-left: auto;
+	margin-right: auto;
+}

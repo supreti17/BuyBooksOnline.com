@@ -1,0 +1,2 @@
+[16-Feb-2017 09:23:59 America/Denver] PHP Warning:  include(header.php): failed to open stream: No such file or directory in /home1/icoolsho/icoolshow/nsc2017/supreti/GroupProject/checkout.php on line 1
+[16-Feb-2017 09:23:59 America/Denver] PHP Warning:  include(): Failed opening 'header.php' for inclusion (include_path='.:/usr/php/56/usr/lib64:/usr/php/56/usr/share/pear') in /home1/icoolsho/icoolshow/nsc2017/supreti/GroupProject/checkout.php on line 1
