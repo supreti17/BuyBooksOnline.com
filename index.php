@@ -1,12 +1,9 @@
 <?php
+ob_start();
   session_start();
   require('php/header.php');
 ?>
 
-<link href="css/jumbotron.css" rel="stylesheet">
-<link href="css/index.css" rel="stylesheet">
-
-<?php require('php/navbar.php'); ?>
 <!-- Main jumbotron for a primary marketing message or call to action -->
 <div class="jumbotron">
   <div class="container jumbotron_area">
@@ -30,7 +27,10 @@
       </div>
 
     </p>
-    <p><a class="btn btn-primary btn-lg" href="checkout.php" role="button">Buy Now</a></p>
+    <form method="post" action="checkout.php">
+        <input type="hidden" id="book_id" name="book_id">
+        <input type="submit" class="btn btn-primary btn-lg" role="button" value="Buy Now">
+    </form>
     </div>
   </div>
 </div>

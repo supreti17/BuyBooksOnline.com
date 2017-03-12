@@ -18,6 +18,7 @@ function outputData(list) {
 }
 
 function createBooks(oneBook) {
+        //Create a div for one book
 	var div_element = document.createElement("div");
 	div_element.className = 'col-sm-6 col-md-4';
 	var div_thumbnail = document.createElement("div");
@@ -45,12 +46,14 @@ function createJumbotron(book) {
 		jumbotronTextArea.removeChild(jumbotronTextArea.firstChild);
 	}
 	document.getElementById("jumbotron_cover").src = book.image;
+        //book.id
 	var title_elem = document.createElement("h2");
 	title_elem.appendChild(document.createTextNode(book.title));
 	var desc_elem = document.createElement("p");
 	desc_elem.appendChild(document.createTextNode(book.description));
 	document.getElementById("jumbotron_textarea").appendChild(title_elem);
 	document.getElementById("jumbotron_textarea").appendChild(desc_elem);
+        document.getElementById("book_id").value = book.id;
 }
 
 
