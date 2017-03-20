@@ -1,7 +1,8 @@
 <?php
-ob_start();
   session_start();
   require('php/header.php');
+  require('php/connection.php');
+  require('php/signin_functions.php');
 
 $action = filter_input(INPUT_POST, 'action');
 
@@ -31,6 +32,11 @@ switch ($action) {
 }
 
 ?>
+
+  <link href="css/signin.css" rel="stylesheet">
+  <link href="css/jumbotron.css" rel="stylesheet">
+  
+  <?php require('php/navbar.php'); ?>
 
     <div class="container">
 

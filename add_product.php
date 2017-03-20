@@ -1,5 +1,4 @@
 <?php
-ob_start();
   session_start();
   require('php/header.php');
   require('php/connection.php');

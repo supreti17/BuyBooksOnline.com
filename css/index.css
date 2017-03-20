@@ -1,0 +1,19 @@
+.dropdown-item {
+	display: block;
+	padding: 2px;
+}
+
+.jumbotron_area {
+	display: flex;
+	align-items: center;
+}
+
+#jumbotron_cover {
+	width: 300px;
+	height: 300px;
+}
+
+.thumbnail:hover {
+	cursor: pointer;
+	cursor: hand;
+}

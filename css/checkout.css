@@ -1,0 +1,12 @@
+.form-horizontal {
+	margin-top: 20px;
+}
+
+.form-group > div {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.add_change_btn {
+	text-align: center;
+}
