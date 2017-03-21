@@ -45,7 +45,7 @@
                 <?php else: ?> 
                  <button type="submit" class="btn btn-success" name="action" value="sign_out">Sign Out</button> 
               </form> 
-              <span class="navbar-text navbar-right"><?php echo $_SESSION["username"]; ?></span> 
+              <span class="navbar-text navbar-right"><?php echo htmlspecialchars($_SESSION["username"]); ?></span> 
               <?php endif; ?> 
              <ul class="nav navbar-nav navbar-right"> 
               <li> 

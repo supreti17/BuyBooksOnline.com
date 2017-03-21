@@ -38,11 +38,11 @@
       <br>
     <?php if (!empty($cart_success)): ?>
       <div class="alert alert-success">
-        <strong>Successful! <?php echo $cart_success; ?></strong>
+        <strong>Successful! <?php echo htmlspecialchars($cart_success); ?></strong>
     </div>
   <?php elseif (!empty($cart_error)): ?>
     <div class="alert alert-warning">
-        <strong><?php echo $cart_error; ?></strong>
+        <strong><?php echo htmlspecialchars($cart_error); ?></strong>
     </div>
   <?php endif; ?>
 
@@ -51,7 +51,7 @@
       <div class="container">
       <h3>
         <span>Shopping Cart (<?php $items_count = count($_SESSION["cart_items"]);
-                              echo $items_count;
+                              echo htmlspecialchars($items_count);
                               if ($items_count <= 1) {
                                 echo " item";
                               } else {
@@ -67,19 +67,19 @@
         <?php foreach ($_SESSION["cart_items"] as $item) { ?>
           <div class="row">
           <div class="col-sm-6 col-md-2">
-            <img src="<?php echo $item['image']; ?>" alt="<?php echo $item['title']; ?>" width=100 height=100>
+            <img src="<?php echo $item['image']; ?>" alt="<?php echo htmlspecialchars($item['title']); ?>" width=100 height=100>
           </div>
           <div class="col-sm-6 col-md-9">
             <h5>
-              <span><?php echo $item['title']; ?></span>
+              <span><?php echo htmlspecialchars($item['title']); ?></span>
               <form method="POST" action="checkout_confirmation.php">
-                <input type="hidden" id="book_title" class="form-control" name="book_to_remove" value="<?php echo $item['title']; ?>">
+                <input type="hidden" id="book_title" class="form-control" name="book_to_remove" value="<?php echo htmlspecialchars($item['title']); ?>">
                 <input type="hidden" name="cart" class="form-control" value="remove_item_from_cart">
                 <input type="submit" class='btn btn-danger btn-sm pull-right' value="Remove">
               </form>
             </h5>
-            <p>Price: $<?php echo $item['price']; ?></p>
-            <p>Quantity: <?php echo $item['quantity']; ?></p>
+            <p>Price: $<?php echo htmlspecialchars($item['price']); ?></p>
+            <p>Quantity: <?php echo htmlspecialchars($item['quantity']); ?></p>
             <?php $total += $item['subtotal']; ?>
           </div>
           </div>
@@ -93,17 +93,17 @@
 
     <div class="container">
     <h3>Address</h3>
-      <p><?php echo $_SESSION["address"][0]["street"]; ?></p>
-      <p><?php echo $_SESSION["address"][0]["city"] . ", " . $_SESSION["address"][0]["state"] . " " . $_SESSION["address"][0]["zipcode"]; ?></p>
+      <p><?php echo htmlspecialchars($_SESSION["address"][0]["street"]); ?></p>
+      <p><?php echo htmlspecialchars($_SESSION["address"][0]["city"]) . ", " . htmlspecialchars($_SESSION["address"][0]["state"]) . " " . htmlspecialchars($_SESSION["address"][0]["zipcode"]); ?></p>
     </div>
 
     <div class="container">
     <hr>
     <h3>Payment</h3>
-      <p>Name:<?php echo $_SESSION["payment"][0]["name"]; ?></p>
-      <p>Card Number: <?php echo $_SESSION["payment"][0]["number"]; ?></p>
-      <p>Expiration Date: <?php echo $_SESSION["payment"][0]["exp_month"] . "/" . $_SESSION["payment"][0]["exp_year"]; ?></p>
-      <p>CVV Number: <?php echo $_SESSION["payment"][0]["cvv_number"]; ?></p>
+      <p>Name:<?php echo htmlspecialchars($_SESSION["payment"][0]["name"]); ?></p>
+      <p>Card Number: <?php echo htmlspecialchars($_SESSION["payment"][0]["number"]); ?></p>
+      <p>Expiration Date: <?php echo htmlspecialchars($_SESSION["payment"][0]["exp_month"]) . "/" . htmlspecialchars($_SESSION["payment"][0]["exp_year"]); ?></p>
+      <p>CVV Number: <?php echo htmlspecialchars($_SESSION["payment"][0]["cvv_number"]); ?></p>
     </div>
 
     <div class="container">
@@ -114,7 +114,7 @@
             <h4> Subtotal: </h4>
           </div>
         <div class="col-sm-6 col-md-8">
-          <h4 class="pull-right">$<?php echo $total; ?></h4>
+          <h4 class="pull-right">$<?php echo htmlspecialchars($total); ?></h4>
         </div>
       </div>
       <div class="row">

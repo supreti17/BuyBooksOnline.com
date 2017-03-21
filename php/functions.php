@@ -127,9 +127,8 @@ function getBook($book_id, $conn) {
     $sql = "INSERT INTO Address (street, city, state, zipcode) 
             VALUES ('".$street."', '".$city."', '".$state."', '".$zipcode."')";
     if ($conn->query($sql) === TRUE) {
-      echo "Address added!";
-    $address_id = checkAddress($street, $city, $state, $zipcode, $conn);
-    addUserAddress($address_id["id"], $conn);
+      $address_id = checkAddress($street, $city, $state, $zipcode, $conn);
+      addUserAddress($address_id["id"], $conn);
     }
     $conn->close();
   }
@@ -160,7 +159,6 @@ function getBook($book_id, $conn) {
     $sql = "UPDATE Books
             SET quantity = quantity - $quantity_to_remove 
             WHERE id = $book_id";
-    echo $sql;
     $conn->query($sql);
   }
 

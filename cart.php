@@ -58,17 +58,17 @@ require('php/header.php');
     	<br>
     <?php if (!empty($cart_success)): ?>
     	<div class="alert alert-success">
-  			<strong>Successful! <?php echo $cart_success; ?></strong>
+  			<strong>Successful! <?php echo htmlspecialchars($cart_success); ?></strong>
 		</div>
 	<?php elseif (!empty($cart_error)): ?>
 		<div class="alert alert-warning">
-  			<strong><?php echo $cart_error; ?></strong>
+  			<strong><?php echo htmlspecialchars($cart_error); ?></strong>
 		</div>
 	<?php endif; ?>
 
     	<h1>
     		<span>Shopping Cart (<?php $items_count = count($_SESSION["cart_items"]);
-                              echo $items_count;
+                              echo htmlspecialchars($items_count);
                               if ($items_count <= 1) {
                                 echo " item";
                               } else {
@@ -86,18 +86,18 @@ require('php/header.php');
     		<?php foreach ($_SESSION["cart_items"] as $item) { ?>
     			<div class="row">
     			<div class="col-sm-6 col-md-2">
-			    	<img src="<?php echo $item['image']; ?>" alt="<?php echo $item['title']; ?>" width=150 height=150>
+			    	<img src="<?php echo $item['image']; ?>" alt="<?php echo htmlspecialchars($item['title']); ?>" width=150 height=150>
 			    </div>
 			    <div class="col-sm-6 col-md-8">
 			    	<h3>
-			    		<span><?php echo $item['title']; ?></span>
+			    		<span><?php echo htmlspecialchars($item['title']); ?></span>
 			    		<form method="POST" action="cart.php">
-				    		<input type="hidden" id="book_title" class="form-control" name="book_to_remove" value="<?php echo $item['title']; ?>">
+				    		<input type="hidden" id="book_title" class="form-control" name="book_to_remove" value="<?php echo htmlspecialchars($item['title']); ?>">
 				    		<input type="hidden" name="cart" class="form-control" value="remove_item_from_cart">
 				    		<input type="submit" class='btn btn-danger pull-right' value="Remove">
 			    		</form>
 			    	</h3>
-			    	<p>Price: $<?php echo $item['price']; ?></p>
+			    	<p>Price: $<?php echo htmlspecialchars($item['price']); ?></p>
 			    	<?php $total += $item['subtotal']; ?>
 
 			    	<form method="POST" action="cart.php">
@@ -105,9 +105,9 @@ require('php/header.php');
 					  <div class="col-md-4">
 					    <div class="input-group">
 					    <span class="input-group-addon">Quantity:</span>
-					      <input type="text" class="form-control" name="book_quantity" placeholder="<?php echo $item['quantity']; ?>">
+					      <input type="text" class="form-control" name="book_quantity" placeholder="<?php echo htmlspecialchars($item['quantity']); ?>">
 					      <span class="input-group-btn">
-					    		<input type="hidden" class="form-control" name="book_to_update" value="<?php echo $item['title']; ?>">
+					    		<input type="hidden" class="form-control" name="book_to_update" value="<?php echo htmlspecialchars($item['title']); ?>">
 					    		<input type="hidden" name="cart" class="form-control" value="update_item_in_cart">
 					    		<input type="submit" class='btn btn-default' value="Update">
 					      </span>
@@ -127,7 +127,7 @@ require('php/header.php');
 	    	 		<h4> Subtotal: </h4>
 	    	 	</div>
 				<div class="col-sm-6 col-md-8">
-					<h4 class="pull-right">$<?php echo $total; ?></h4>
+					<h4 class="pull-right">$<?php echo htmlspecialchars($total); ?></h4>
 				</div>
 			</div>
 			<div class="row">

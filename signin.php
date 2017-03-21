@@ -41,15 +41,15 @@ switch ($action) {
       <h2 class="form-signin-heading">Sign In</h2> 
       <?php if (!empty($login_error)): ?> 
       <div class="alert alert-danger"> 
-        <strong><?php echo $login_error; ?></strong> 
-      </div> 
+        <strong><?php echo htmlspecialchars($login_error); ?></strong> 
+      </div>
       <?php endif; ?>
       <label for="inputUsername" class="sr-only">Username</label> 
       <input type="text" name="username" id="inputUsername" class="form-control" placeholder="Username" required autofocus> 
       <label for="inputPassword" class="sr-only">Password</label> 
-      <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required> 
+      <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
       <button id = "sign_in_btn" class="btn btn-lg btn-primary btn-block btn-success" type="submit" name="action" value="sign_in_form">Sign in
-      </button> 
+      </button>
       <p id="sign_up_text">Don't have an account? Sign Up here!</p> 
     </form> 
 
