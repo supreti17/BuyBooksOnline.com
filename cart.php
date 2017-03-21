@@ -1,6 +1,4 @@
 <?php
-$lifetime = 60 * 60 * 24; // stores session for 1 day
-session_set_cookie_params($lifetime);
 session_start();
 require('php/connection.php');
 require('php/functions.php');
