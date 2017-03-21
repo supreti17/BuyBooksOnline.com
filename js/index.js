@@ -46,14 +46,12 @@ function createJumbotron(book) {
 		jumbotronTextArea.removeChild(jumbotronTextArea.firstChild);
 	}
 	document.getElementById("jumbotron_cover").src = book.image;
-        //book.id
 	var title_elem = document.createElement("h2");
 	title_elem.appendChild(document.createTextNode(book.title));
 	var desc_elem = document.createElement("p");
 	desc_elem.appendChild(document.createTextNode(book.description));
 	document.getElementById("jumbotron_textarea").appendChild(title_elem);
 	document.getElementById("jumbotron_textarea").appendChild(desc_elem);
-        document.getElementById("book_id").value = book.id;
+    document.getElementById("book_id").value = book.id;
+    document.getElementById("book_title").value = book.title;
 }
-
-

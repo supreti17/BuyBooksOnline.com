@@ -1,9 +1,8 @@
 <?php
-ob_start();
   session_start();
-  require('php/header.php');
   require('php/connection.php');
-  require('php/checkout_functions.php');
+  require('php/functions.php');
+  require('php/header.php');
 
   if (empty($_SESSION["user_id"]) || $_SESSION["usertype_id"] !== '1') {
     header('Location: signin.php');
@@ -122,5 +121,4 @@ ob_start();
       </form>
     </div>
 
-</body>
-</html>
+<?php include 'php/footer.php'; ?>

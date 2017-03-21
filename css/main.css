@@ -1,0 +1,83 @@
+/* Move down content because we have a fixed navbar that is 50px tall */
+body .body_area {
+  padding-top: 50px;
+  padding-bottom: 20px;
+}
+
+.signin_page {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: #eee;
+}
+
+.signin_page .form-signin {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+.signin_page .form-signin .form-signin-heading,
+.signin_page .form-signin .checkbox {
+  margin-bottom: 10px;
+}
+.signin_page .form-signin .checkbox {
+  font-weight: normal;
+}
+.signin_page .form-signin .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+.signin_page .form-signin .form-control:focus {
+  z-index: 2;
+}
+.signin_page .form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.signin_page .form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.signin_page #sign_up_text:hover, .signin_page #sign_in_text:hover {
+  cursor: pointer;
+  cursor: hand;
+}
+
+.signin_page #signup_form {
+  display: none;
+}
+
+.jumbotron_area {
+  display: flex;
+  align-items: center;
+}
+
+#jumbotron_cover {
+  width: 300px;
+  height: 300px;
+}
+
+.thumbnail:hover {
+  cursor: pointer;
+  cursor: hand;
+}
+
+.form-horizontal {
+  margin-top: 20px;
+}
+
+.form-group > div {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.add_change_btn {
+  text-align: center;
+}

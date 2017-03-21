@@ -1,100 +1,145 @@
 <?php
-ob_start();
   session_start();
+  require('php/connection.php');
+  require('php/functions.php');
   require('php/header.php');
 
-  if (empty($_SESSION["user_id"])) {
-    header('Location: signin.php');
+  $cart_error = "";
+  $cart_success = "";
+  $total = 0;
+
+  if (!isset($_SESSION['cart_items'])) {
+    header('Location: cart.php');
     exit();
-  }else if(filter_input(INPUT_POST, 'form_purchase')){
-    updateBook($_SESSION["book_id"], $conn);
-    header('Location: thank_you.php');
-    exit();      
+  } else if (!isset($_SESSION['address']) || !isset($_SESSION['payment'])) {
+    header('Location: checkout.php');
+    exit();
   }
 
-  if(!empty($_SESSION["card_name"])){
-      $card_name = $_SESSION["card_name"]; 
-      echo 'card name not empty block';
-  }else{     
-      $card_name = "No Card Name Given";
-  }
-    
-  if(!empty($_SESSION["card_number"])){
-      $card_last_four = substr($_SESSION["card_number"], -4);
+  $action = filter_input(INPUT_POST, "cart");
 
-  }else{
-          $card_last_four = "No Card Number Given";
+  switch ($action) {
 
+    case "remove_item_from_cart":
+       $book_to_remove = filter_input(INPUT_POST, "book_to_remove");
+      if (!empty($book_to_remove)) {
+        $key = get_item_key($book_to_remove, $_SESSION["cart_items"]);
+        unset($_SESSION["cart_items"][$key]);
+      }
+      break;
+
+    default:
+      break;
   }
 ?>
 
-<div class="container">
-    <h1>Confirm Your Purchase:</h1>
- <form class="form-horizontal" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+<div class = "body_area">
+    <div class="container">
+      <br>
+    <?php if (!empty($cart_success)): ?>
+      <div class="alert alert-success">
+        <strong>Successful! <?php echo $cart_success; ?></strong>
+    </div>
+  <?php elseif (!empty($cart_error)): ?>
+    <div class="alert alert-warning">
+        <strong><?php echo $cart_error; ?></strong>
+    </div>
+  <?php endif; ?>
 
-     <div>
-        <?php
-          $book_row = getBook($_SESSION["book_id"], $conn);
-        ?>
-        <h3><?php if($book_row){echo $book_row["title"];}?></h3>
-        <p>$<?php if($book_row){echo $book_row["price"];}?></p>
-        <div class="checkout_conf_book">
-            <img alt="Picture of <?php if($book_row){echo $book_row["title"];}?>" src="<?php if($book_row){echo $book_row["image"];}?>">
-            <p><?php if($book_row){echo $book_row["description"];}?></p>
+      <h1>Checkout Confirmation</h1>
+
+      <div class="container">
+      <h3>
+        <span>Shopping Cart (<?php $items_count = count($_SESSION["cart_items"]);
+                              echo $items_count;
+                              if ($items_count <= 1) {
+                                echo " item";
+                              } else {
+                                echo " items";
+                              } ?>)</span>
+      <?php if (!isset($_SESSION["cart_items"]) || empty($_SESSION["cart_items"])): ?>
+      </h3>
+      <hr>
+        <p>No items added in the cart!</p>
+      <?php else: ?>
+        </h3>
+        <hr>
+        <?php foreach ($_SESSION["cart_items"] as $item) { ?>
+          <div class="row">
+          <div class="col-sm-6 col-md-2">
+            <img src="<?php echo $item['image']; ?>" alt="<?php echo $item['title']; ?>" width=100 height=100>
+          </div>
+          <div class="col-sm-6 col-md-9">
+            <h5>
+              <span><?php echo $item['title']; ?></span>
+              <form method="POST" action="checkout_confirmation.php">
+                <input type="hidden" id="book_title" class="form-control" name="book_to_remove" value="<?php echo $item['title']; ?>">
+                <input type="hidden" name="cart" class="form-control" value="remove_item_from_cart">
+                <input type="submit" class='btn btn-danger btn-sm pull-right' value="Remove">
+              </form>
+            </h5>
+            <p>Price: $<?php echo $item['price']; ?></p>
+            <p>Quantity: <?php echo $item['quantity']; ?></p>
+            <?php $total += $item['subtotal']; ?>
+          </div>
+          </div>
         </div>
-        </div>     
-     
-        <fieldset>
-        <legend>Address:</legend>
-        <?php
-          $address_row = getUserAddress($_SESSION["user_id"], $conn);
-        ?>
-        
-        <div class="form-group row">
-          <div class="col-md-6">
-            <input type="text" class="form-control" id="address" name="street_address" placeholder="Address" value="<?php if($address_row){echo $address_row["street"];}else{echo $_SESSION["street"];} ?>">
-          </div>
-            
-        </div> 
+        <div class="container">
+        <hr>
+      <?php
+        }
+       endif; ?>
+    </div>
 
-        <div class="form-group row">
-          <div class="col-md-2">
-            <input type="text" class="form-control" name="city_address" id="city" placeholder="City" value="<?php if($address_row){echo $address_row["city"];}else{echo $_SESSION["city"];}  ?>">
+    <div class="container">
+    <h3>Address</h3>
+      <p><?php echo $_SESSION["address"][0]["street"]; ?></p>
+      <p><?php echo $_SESSION["address"][0]["city"] . ", " . $_SESSION["address"][0]["state"] . " " . $_SESSION["address"][0]["zipcode"]; ?></p>
+    </div>
+
+    <div class="container">
+    <hr>
+    <h3>Payment</h3>
+      <p>Name:<?php echo $_SESSION["payment"][0]["name"]; ?></p>
+      <p>Card Number: <?php echo $_SESSION["payment"][0]["number"]; ?></p>
+      <p>Expiration Date: <?php echo $_SESSION["payment"][0]["exp_month"] . "/" . $_SESSION["payment"][0]["exp_year"]; ?></p>
+      <p>CVV Number: <?php echo $_SESSION["payment"][0]["cvv_number"]; ?></p>
+    </div>
+
+    <div class="container">
+    <hr>
+      <?php if (isset($_SESSION["cart_items"]) && !empty($_SESSION["cart_items"])): ?>
+        <div class="row">
+          <div class="col-sm-6 col-md-2">
+            <h4> Subtotal: </h4>
           </div>
-          <div class="col-md-2">
-            <input type="text" class="form-control" name="state_address" id="state" placeholder="State" value="<?php if($address_row){echo $address_row["state"];}else{echo $_SESSION["state"];}  ?>">
-          </div>
-          <div class="col-md-2">
-            <input type="text" class="form-control" name="zip_code_address" id="zipcode" placeholder="Zip Code" value="<?php if($address_row){echo $address_row["zipcode"];}else{echo $_SESSION["zipcode"];}  ?>">
-          </div>
+        <div class="col-sm-6 col-md-8">
+          <h4 class="pull-right">$<?php echo $total; ?></h4>
         </div>
-
-        </fieldset>
-
-          <fieldset>
-           <legend>Payment Info:</legend>
-          <div class="form-group row">
-            <div class="col-md-6">
-                <input type="text" class="form-control" name="card_name" id="card_name" placeholder="<?php if(empty($card_name)){echo "No Card Name";}else{echo $card_name;} ?>">
-            </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6 col-md-2">
+            <h4> Tax: </h4>
           </div>
-
-          <div class="form-group row">
-            <div class="col-md-6">
-                <input type="text" class="form-control"  name="card_number" id="card_number" placeholder="<?php if(empty($card_last_four)){echo "No Card Number";}else{echo "xxxx-xxxx-xxxx-" . $card_last_four;} ?>">
-            </div>
+        <div class="col-sm-6 col-md-8">
+          <h4 class="pull-right">$<?php echo round($total * 0.096, 2); ?></h4>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6 col-md-2">
+            <h4> Total: </h4>
           </div>
-              <input type="hidden" name="form_purchase" value="purchase">
-          </fieldset>
+        <div class="col-sm-6 col-md-8">
+          <h4 class="pull-right">$<?php echo $total + round($total * 0.096, 2); ?></h4>
+        </div>
+      </div>
+    <?php endif; ?>
 
-        <div class="form-group"> 
-            <div class="col-sm-10">
-              <button type="submit" class="btn btn-default">Buy</button>
-            </div>
-          </div>
-      </form>
+    <a href="thank_you.php" class='btn btn-primary btn-lg btn-block'>Place Order</a>
+    </div>
+    </div>
+
+    </div>
 </div>
 
-
-</body>
-</html>
+ <?php include 'php/footer.php'; ?>
